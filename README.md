@@ -31,12 +31,19 @@ A Django REST Framework API for managing user subscriptions with plan switching 
 - `is_active`: Only one active subscription per user allowed
 - Auto-calculated `start_date` and `end_date`
 
+## Admin Management
+- Plans and Features are managed through the Django Admin.
+- A superuser can log in to the admin panel (/admin/) to create and manage
+- Regular users cannot create or modify plans/features; they can only subscribe to available ones.
+#### To create a superuser: `python manage.py createsuperuser`
+
+
 ## API Endpoints
 
 ### List/Create Subscriptions
 ```
-GET /subscriptions/
-POST /subscriptions/
+GET /api/v1/subscriptions/
+POST /api/v1/subscriptions/
 ```
 
 **Create Subscription:**
@@ -72,7 +79,7 @@ POST /subscriptions/
 
 ### Switch Plan
 ```
-POST /subscriptions/switch-plan/
+POST /api/v1/subscriptions/switch-plan/
 ```
 
 **Request:**
@@ -90,12 +97,12 @@ POST /subscriptions/switch-plan/
 
 ### Retrieve Single Subscription
 ```
-GET /subscriptions/{id}/
+GET /api/v1/subscriptions/{id}/
 ```
 
 ### Deactivate Subscription
 ```
-POST /subscriptions/{id}/deactivate/
+POST /api/v1/subscriptions/{id}/deactivate/
 ```
 
 ## Frequency & Pricing
@@ -143,15 +150,15 @@ data = {
     "plan_id": 1,
     "frequency": "monthly"
 }
-response = client.post('/subscriptions/', data)
+response = client.post('/api/v1/subscriptions/', data)
 
 # Switch to yearly billing
 switch_data = {
     "plan_id": 1,
     "frequency": "yearly"
 }
-response = client.post('/subscriptions/switch-plan/', switch_data)
+response = client.post('/api/v1/subscriptions/switch-plan/', switch_data)
 
 # List all subscriptions (with nested plan/feature data)
-response = client.get('/subscriptions/')
+response = client.get('/api/v1/subscriptions/')
 ```
